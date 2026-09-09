@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal: #2d2a26;
+  --color-charcoal-deep: #241f1c;
+  --color-charcoal-lift: #35312c;
+  --color-cream: #f5f0e8;
+  --color-accent: #c97a3d;
+  --color-accent-soft: #d4925a;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html,
+body {
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  color: var(--color-cream);
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.muted {
+  color: color-mix(in srgb, var(--color-cream) 65%, transparent);
+}
+
+.nav-underline {
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.45s var(--ease-luxe);
+}
+
+.nav-underline:hover {
+  background-size: 100% 1px;
+}
+
+@keyframes breathe-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-accent) 45%, transparent));
+  }
+}
+
+.logo-idle {
+  animation: breathe-glow 6s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.vision-band {
+  background: linear-gradient(
+    120deg,
+    #2a2622 0%,
+    #312c27 40%,
+    #3a322a 70%,
+    #2d2a26 100%
+  );
+  background-size: 200% 200%;
+  animation: gradient-shift 18s ease infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.input-glow:focus-within {
+  animation: pulse-ring 1.6s var(--ease-luxe) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-idle,
+  .vision-band,
+  .marquee-track,
+  .input-glow:focus-within {
+    animation: none !important;
+  }
+}
