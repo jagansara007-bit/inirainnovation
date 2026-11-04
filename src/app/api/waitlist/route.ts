@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 
           <!-- Body -->
           <tr>
-            <td style="padding-bottom: 28px; line-height: 1.7; font-size: 15px; color: rgba(245, 240, 232, 0.85); text-align: center;">
+            <td style="padding-bottom: 24px; line-height: 1.7; font-size: 15px; color: rgba(245, 240, 232, 0.85); text-align: center;">
               <p style="margin: 0 0 16px;">
                 Thank you for your interest in <strong>Inira Innovations</strong>. We have successfully registered your email address (<strong>${email}</strong>) to our exclusive waitlist.
               </p>
@@ -86,9 +86,9 @@ export async function POST(req: NextRequest) {
             </td>
           </tr>
 
-          <!-- Status Card -->
+          <!-- Status Badge -->
           <tr>
-            <td align="center" style="padding-bottom: 36px;">
+            <td align="center" style="padding-bottom: 32px;">
               <div style="display: inline-block; padding: 10px 22px; background-color: rgba(201, 122, 61, 0.12); border: 1px solid rgba(201, 122, 61, 0.3); border-radius: 9999px;">
                 <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #c97a3d; font-weight: 600;">
                   Priority Access Reserved
@@ -97,7 +97,30 @@ export async function POST(req: NextRequest) {
             </td>
           </tr>
 
-          <!-- Footer Divider -->
+          <!-- Social Media Section -->
+          <tr>
+            <td style="padding-bottom: 36px; text-align: center; border-top: 1px solid rgba(245, 240, 232, 0.08); padding-top: 28px;">
+              <p style="margin: 0 0 16px; font-size: 14px; color: rgba(245, 240, 232, 0.8);">
+                While waiting, please check out our social media platforms:
+              </p>
+              <table role="presentation" cellspacing="0" cellpadding="0" align="center" style="margin: 0 auto;">
+                <tr>
+                  <td style="padding: 4px 8px;">
+                    <a href="https://instagram.com/inira_innovations" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: rgba(245, 240, 232, 0.05); border: 1px solid rgba(245, 240, 232, 0.15); border-radius: 9999px; color: #f5f0e8; text-decoration: none; font-size: 13px; font-weight: 500;">
+                      <span style="color: #c97a3d; margin-right: 6px;">&#9679;</span> Instagram <span style="color: rgba(245, 240, 232, 0.5); font-size: 12px;">@inira_innovations</span>
+                    </a>
+                  </td>
+                  <td style="padding: 4px 8px;">
+                    <a href="https://linkedin.com/company/inira-innovations" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: rgba(245, 240, 232, 0.05); border: 1px solid rgba(245, 240, 232, 0.15); border-radius: 9999px; color: #f5f0e8; text-decoration: none; font-size: 13px; font-weight: 500;">
+                      <span style="color: #c97a3d; margin-right: 6px;">&#9679;</span> LinkedIn
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
           <tr>
             <td style="border-top: 1px solid rgba(245, 240, 232, 0.08); padding-top: 24px; text-align: center;">
               <p style="margin: 0; font-size: 12px; color: rgba(245, 240, 232, 0.45); line-height: 1.6;">
@@ -122,7 +145,7 @@ export async function POST(req: NextRequest) {
       to: email,
       replyTo: emailUser,
       subject: "Welcome to Inira Innovations — You're on the list",
-      text: `Welcome to Inira Innovations\n\nThank you for joining our waitlist (${email}). We have confirmed your registration.\n\nAs we prepare for our launch, you will be among the first to receive private previews and early access updates.\n\nWarm regards,\nInira Innovations\ninirainnovations@gmail.com`,
+      text: `Welcome to Inira Innovations\n\nThank you for joining our waitlist (${email}). We have confirmed your registration.\n\nAs we prepare for our launch, you will be among the first to receive private previews and early access updates.\n\nWhile waiting, please check out our social media platforms:\n• Instagram: https://instagram.com/inira_innovations (@inira_innovations)\n• LinkedIn: https://linkedin.com/company/inira-innovations\n\nWarm regards,\nInira Innovations\ninirainnovations@gmail.com`,
       html: htmlContent,
     });
 
