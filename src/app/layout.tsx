@@ -19,6 +19,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Inira Innovations — Tech Evolved.",
   description: "We're building something new. Quietly, deliberately — and almost ready.",
+  verification: {
+    google: "XXRAt1XjTzTn4CFkYdQ-h2YM0Fv52vCCKRVjS7xbxGE",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
