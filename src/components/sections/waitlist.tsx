@@ -10,22 +10,28 @@ export function Waitlist() {
   const [email, setEmail] = useState("");
   const [focused, setFocused] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const floated = focused || email.length > 0;
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (status === "loading" || status === "success") return;
     setStatus("loading");
+    setErrorMessage("");
     try {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      if (!res.ok) throw new Error("fail");
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        throw new Error(data?.error || "Failed to submit. Please try again.");
+      }
       setStatus("success");
-    } catch {
+    } catch (err: unknown) {
       setStatus("error");
+      setErrorMessage(err instanceof Error ? err.message : "Please try again in a moment.");
     }
   }
 
@@ -122,7 +128,7 @@ export function Waitlist() {
             ) : null}
           </AnimatePresence>
           {status === "error" ? (
-            <p className="mt-4 text-center text-sm text-accent">Please try again in a moment.</p>
+            <p className="mt-4 text-center text-sm text-accent">{errorMessage || "Please try again in a moment."}</p>
           ) : null}
         </form>
       </div>
