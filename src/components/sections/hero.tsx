@@ -118,7 +118,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 pt-24"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-4 pt-20 sm:px-6 sm:pt-24"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-80"
@@ -130,7 +130,7 @@ export function Hero() {
       {!reduced && !touch ? <canvas ref={canvasRef} className="pointer-events-none absolute inset-0" /> : null}
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <h1 className="font-serif text-[clamp(3.4rem,12vw,8.5rem)] leading-[0.9] tracking-tight">
+        <h1 className="font-serif text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.92] tracking-tight">
           {HEADLINE.split("").map((char, i) => (
             <motion.span
               key={`${char}-${i}`}
@@ -148,7 +148,7 @@ export function Hero() {
           ))}
         </h1>
         <motion.p
-          className="muted mx-auto mt-8 max-w-xl text-base leading-relaxed md:text-lg"
+          className="muted mx-auto mt-6 max-w-xl text-sm leading-relaxed sm:mt-8 sm:text-base md:text-lg"
           initial={reduced ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.85, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -157,7 +157,7 @@ export function Hero() {
         </motion.p>
 
         <motion.div
-          className="mt-12 flex justify-center"
+          className="mt-8 flex justify-center sm:mt-12"
           initial={reduced ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.05, duration: 0.6 }}
@@ -165,7 +165,7 @@ export function Hero() {
           <MagneticButton>
             <a
               href="#access"
-              className="inline-flex items-center rounded-full border border-accent/50 bg-accent/15 px-8 py-3.5 text-sm font-medium tracking-wide text-cream shadow-[0_0_0_0_rgba(201,122,61,0.4)] transition-[box-shadow,transform,background] duration-300 hover:bg-accent/25 hover:shadow-[0_0_32px_rgba(201,122,61,0.35)] active:scale-[0.97]"
+              className="inline-flex items-center justify-center rounded-full border border-accent/50 bg-accent/15 px-7 py-3 text-sm font-medium tracking-wide text-cream shadow-[0_0_0_0_rgba(201,122,61,0.4)] transition-[box-shadow,transform,background] duration-300 hover:bg-accent/25 hover:shadow-[0_0_32px_rgba(201,122,61,0.35)] active:scale-[0.97] sm:px-8 sm:py-3.5"
             >
               Join the Waitlist
             </a>
@@ -176,10 +176,10 @@ export function Hero() {
       <a
         href="#signal"
         data-cursor="hover"
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-cream/45"
-        aria-label="Scroll"
+        className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-cream/45 sm:bottom-8"
+        aria-label="Scroll down"
       >
-        <span className="h-10 w-px origin-top bg-gradient-to-b from-accent to-transparent motion-safe:animate-bounce" />
+        <span className="h-8 w-px origin-top bg-gradient-to-b from-accent to-transparent motion-safe:animate-bounce sm:h-10" />
         <span>↓</span>
       </a>
     </section>

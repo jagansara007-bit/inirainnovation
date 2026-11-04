@@ -36,22 +36,22 @@ export function Waitlist() {
   }
 
   return (
-    <section id="access" className="relative bg-charcoal px-6 py-28 md:py-36">
+    <section id="access" className="relative bg-charcoal px-4 py-20 sm:px-6 sm:py-28 md:py-36">
       <div className="mx-auto max-w-lg text-center">
-        <p className="muted text-sm tracking-[0.22em] uppercase">Get Notified</p>
-        <h2 className="font-serif mt-4 text-3xl md:text-5xl">Join the Waitlist</h2>
-        <p className="muted mt-4 text-base">Be the first to know when we launch.</p>
+        <p className="muted text-xs tracking-[0.24em] uppercase sm:text-sm">Get Notified</p>
+        <h2 className="font-serif mt-3 text-2xl sm:mt-4 sm:text-3xl md:text-5xl">Join the Waitlist</h2>
+        <p className="muted mt-3 text-sm sm:mt-4 sm:text-base">Be the first to know when we launch.</p>
 
-        <form onSubmit={onSubmit} className="relative mt-10 pt-6 text-left">
+        <form onSubmit={onSubmit} className="relative mt-8 pt-4 text-left sm:mt-10 sm:pt-6">
           <div
-            className={`input-glow rounded-full border px-5 py-4 transition-colors ${
+            className={`input-glow rounded-full border px-4 py-3.5 transition-colors sm:px-5 sm:py-4 ${
               focused ? "border-accent bg-cream/5" : "border-cream/20 bg-cream/[0.03]"
             }`}
           >
             <label className="relative block">
               <span
                 className={`pointer-events-none absolute left-0 text-cream/50 transition-all duration-300 ${
-                  floated ? "-top-6 text-[11px] tracking-widest uppercase" : "top-1 text-base"
+                  floated ? "-top-5 text-[10px] tracking-widest uppercase sm:-top-6 sm:text-[11px]" : "top-1 text-sm sm:text-base"
                 }`}
               >
                 Email
@@ -63,19 +63,19 @@ export function Waitlist() {
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
-                className="mt-1 w-full bg-transparent pt-2 text-cream outline-none"
+                className="mt-1 w-full bg-transparent pt-2 text-base text-cream outline-none"
                 autoComplete="email"
                 disabled={status === "success"}
               />
             </label>
           </div>
 
-          <div className="mt-6 flex justify-center">
-            <MagneticButton>
+          <div className="mt-5 flex justify-center sm:mt-6">
+            <MagneticButton className="w-full sm:w-auto">
               <motion.button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="relative overflow-hidden rounded-full bg-accent px-10 py-3.5 text-sm font-medium tracking-wide text-charcoal"
+                className="relative w-full overflow-hidden rounded-full bg-accent px-8 py-3.5 text-sm font-medium tracking-wide text-charcoal active:scale-95 sm:w-auto sm:px-10"
                 whileTap={{ scale: 0.97 }}
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -128,7 +128,7 @@ export function Waitlist() {
             ) : null}
           </AnimatePresence>
           {status === "error" ? (
-            <p className="mt-4 text-center text-sm text-accent">{errorMessage || "Please try again in a moment."}</p>
+            <p className="mt-4 text-center text-xs text-accent sm:text-sm">{errorMessage || "Please try again in a moment."}</p>
           ) : null}
         </form>
       </div>

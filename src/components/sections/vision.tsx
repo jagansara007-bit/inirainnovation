@@ -9,21 +9,21 @@ const PHRASE = "TECH EVOLVED · ";
 export function Vision() {
   const reduced = usePrefersReducedMotion();
   const ref = useRef<HTMLParagraphElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.55 });
+  const inView = useInView(ref, { once: true, amount: 0.4 });
   const strip = Array.from({ length: 12 }, () => PHRASE).join("");
 
   return (
-    <section className="vision-band relative overflow-hidden py-28 md:py-36">
+    <section className="vision-band relative overflow-hidden py-20 sm:py-28 md:py-36">
       <div className="pointer-events-none absolute inset-0 flex items-center opacity-[0.12]" aria-hidden>
-        <div className="marquee-track flex w-max whitespace-nowrap font-serif text-[12vw] leading-none tracking-tight">
+        <div className="marquee-track flex w-max whitespace-nowrap font-serif text-[16vw] md:text-[12vw] leading-none tracking-tight">
           <span>{strip}</span>
           <span>{strip}</span>
         </div>
       </div>
-      <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-4xl px-5 text-center sm:px-6">
         <motion.p
           ref={ref}
-          className="font-serif text-3xl leading-snug text-cream md:text-5xl"
+          className="font-serif text-2xl leading-relaxed text-cream sm:text-3xl sm:leading-snug md:text-5xl"
           initial={reduced ? false : { opacity: 0.4, scale: 0.95, filter: "blur(4px)" }}
           animate={
             inView || reduced

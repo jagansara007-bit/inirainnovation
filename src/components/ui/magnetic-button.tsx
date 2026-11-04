@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useIsTouchDevice } from "@/hooks/use-media-query";
 
 const SPRING_CONFIG = { damping: 100, stiffness: 400 };
 
@@ -12,6 +13,7 @@ type MagneticButtonType = {
 };
 
 function MagneticButton({ children, distance = 0.35, className }: MagneticButtonType) {
+  const touch = useIsTouchDevice();
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -22,6 +24,8 @@ function MagneticButton({ children, distance = 0.35, className }: MagneticButton
   const springY = useSpring(y, SPRING_CONFIG);
 
   useEffect(() => {
+    if (touch) return;
+
     const calculateDistance = (e: MouseEvent) => {
       if (!ref.current) return;
       const rect = ref.current.getBoundingClientRect();
@@ -41,7 +45,11 @@ function MagneticButton({ children, distance = 0.35, className }: MagneticButton
 
     document.addEventListener("mousemove", calculateDistance);
     return () => document.removeEventListener("mousemove", calculateDistance);
-  }, [distance, isHovered, x, y]);
+  }, [distance, isHovered, touch, x, y]);
+
+  if (touch) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div

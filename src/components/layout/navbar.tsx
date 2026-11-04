@@ -27,7 +27,7 @@ export function Navbar() {
 
   return (
     <header
-      className="fixed top-0 left-0 z-50 w-full"
+      className="fixed top-0 left-0 z-50 w-full transition-[background-color,border-color] duration-200"
       style={{
         backgroundColor: bg,
         backdropFilter: `blur(${blur}px)`,
@@ -35,26 +35,33 @@ export function Navbar() {
         borderBottom: `1px solid rgba(245, 240, 232, ${progress * 0.08})`,
       }}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 md:px-8">
-        <a href="#top" className="logo-idle group inline-flex items-center" data-cursor="hover" aria-label="Inira Innovations">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5 sm:px-6 sm:py-3 md:px-8">
+        <a
+          href="#top"
+          className="logo-idle group inline-flex items-center"
+          data-cursor="hover"
+          aria-label="Inira Innovations"
+        >
           <Image
             src="/logo.jpg"
             alt="Inira Innovations"
             width={148}
             height={148}
-            className="h-16 w-auto object-contain transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-[2deg] md:h-[4.75rem]"
+            className="h-10 w-auto object-contain transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-[2deg] sm:h-12 md:h-[4.75rem]"
             priority
           />
         </a>
-        <div className="flex items-center gap-6 text-sm tracking-wide md:gap-10">
+        <div className="flex items-center gap-4 text-sm tracking-wide sm:gap-6 md:gap-10">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               data-cursor="hover"
               className={cn(
-                "nav-underline font-medium italic",
-                link.href === "#access" ? "text-cream" : "muted hidden sm:inline",
+                "transition-all duration-300 font-medium italic",
+                link.href === "#access"
+                  ? "rounded-full border border-accent/40 bg-accent/15 px-3.5 py-1.5 text-xs text-cream active:scale-95 sm:border-transparent sm:bg-transparent sm:px-0 sm:py-0 sm:text-sm sm:text-cream nav-underline"
+                  : "muted hidden sm:inline nav-underline",
               )}
             >
               {link.label}

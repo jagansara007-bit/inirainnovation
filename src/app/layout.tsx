@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -24,10 +24,19 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#2d2a26",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${poppins.variable}`}>
-      <body className="bg-charcoal font-sans text-cream antialiased" suppressHydrationWarning>{children}</body>
+      <body className="bg-charcoal font-sans text-cream antialiased" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

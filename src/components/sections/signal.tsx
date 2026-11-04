@@ -108,7 +108,7 @@ export function Signal() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=160%",
+          end: touch ? "+=110%" : "+=160%",
           pin: true,
           scrub: true,
           onUpdate: (self) => {
@@ -156,17 +156,17 @@ export function Signal() {
 
   return (
     <section id="signal" className="relative bg-charcoal-lift">
-      <div ref={pinRef} className="relative flex min-h-[100svh] items-center justify-center px-6">
+      <div ref={pinRef} className="relative flex min-h-[100svh] items-center justify-center px-5 sm:px-6">
         {!reduced && !touch ? <canvas ref={canvasRef} className="pointer-events-none absolute inset-0" /> : null}
-        <div className="relative z-10 mx-auto max-w-3xl space-y-8 md:space-y-10">
+        <div className="relative z-10 mx-auto max-w-3xl space-y-6 sm:space-y-8 md:space-y-10 text-center md:text-left">
           {LINES.map((line, i) => (
             <p
               key={line}
               ref={(el) => {
                 if (el) linesRef.current[i] = el;
               }}
-              className={`font-serif leading-[1.15] tracking-tight text-cream ${
-                i === 2 ? "text-3xl italic md:text-5xl" : "text-3xl md:text-5xl"
+              className={`font-serif leading-[1.2] tracking-tight text-cream ${
+                i === 2 ? "text-2xl sm:text-3xl italic md:text-5xl" : "text-2xl sm:text-3xl md:text-5xl"
               }`}
             >
               {line}

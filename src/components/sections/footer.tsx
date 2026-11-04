@@ -38,24 +38,24 @@ const socials = [
 export function Footer() {
   return (
     <motion.footer
-      className="border-t border-cream/10 bg-charcoal-deep px-6 py-14"
+      className="border-t border-cream/10 bg-charcoal-deep px-4 py-10 sm:px-6 sm:py-14"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-8 md:flex-row">
-        <div className="text-center md:text-left">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 text-center sm:gap-8 md:flex-row md:text-left">
+        <div>
           <p className="font-serif text-xl italic">Tech Evolved.</p>
           <a
             href="mailto:inirainnovations@gmail.com"
-            className="muted mt-2 inline-block text-sm nav-underline"
+            className="muted mt-1.5 inline-block text-xs sm:mt-2 sm:text-sm nav-underline"
             data-cursor="hover"
           >
             inirainnovations@gmail.com
           </a>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3.5">
           {socials.map((s) => (
             <motion.a
               key={s.href}
@@ -64,8 +64,8 @@ export function Footer() {
               rel={s.href.startsWith("http") ? "noreferrer" : undefined}
               aria-label={s.label}
               data-cursor="hover"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/15 text-cream/70"
-              whileHover={{ scale: 1.12, backgroundColor: "rgba(201,122,61,0.22)", color: "#F5F0E8", borderColor: "rgba(201,122,61,0.7)" }}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/15 text-cream/70 active:scale-95"
+              whileHover={{ scale: 1.1, backgroundColor: "rgba(201,122,61,0.22)", color: "#F5F0E8", borderColor: "rgba(201,122,61,0.7)" }}
               transition={{ type: "spring", stiffness: 380, damping: 18 }}
             >
               {s.icon}
@@ -73,7 +73,7 @@ export function Footer() {
           ))}
         </div>
       </div>
-      <p className="muted mx-auto mt-10 max-w-6xl text-center text-xs tracking-widest uppercase">
+      <p className="muted mx-auto mt-8 max-w-6xl text-center text-[10px] tracking-widest uppercase sm:mt-10 sm:text-xs">
         Instagram @inira_innovations
       </p>
     </motion.footer>
