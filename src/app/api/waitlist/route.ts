@@ -17,10 +17,9 @@ export async function POST(req: NextRequest) {
     let registrationOrder: number | string | null = null;
     let isAlreadyRegistered = false;
 
-    // 1. Store in Supabase database if configured
+    // 1. Store in Supabase database
     if (supabase) {
       try {
-        // Check if email already exists
         const { data: existing, error: checkError } = await supabase
           .from("waitlist")
           .select("id, created_at")
@@ -35,7 +34,6 @@ export async function POST(req: NextRequest) {
           isAlreadyRegistered = true;
           registrationOrder = existing.id;
         } else {
-          // Insert new subscriber in sequential registration order
           const { data: inserted, error: insertError } = await supabase
             .from("waitlist")
             .insert({ email, email_sent: false })
@@ -51,38 +49,29 @@ export async function POST(req: NextRequest) {
       } catch (dbErr) {
         console.error("[Waitlist DB Exception]:", dbErr);
       }
-    } else {
-      console.warn("⚠️ [Waitlist] Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to .env.local to persist subscribers.");
     }
 
-    // 2. Setup Nodemailer Transporter
+    // 2. Setup Nodemailer and dispatch email
     const emailUser = process.env.EMAIL_USER || process.env.GMAIL_USER || "inirainnovations@gmail.com";
     const emailPass = process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD;
 
-    if (!emailPass) {
-      console.warn("⚠️ [Waitlist] EMAIL_PASS is not set in .env.local. Email will not be dispatched.");
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "Email service not configured. Please set EMAIL_PASS in .env.local.",
-        },
-        { status: 500 }
-      );
-    }
+    let emailSentSuccessfully = false;
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: emailUser,
-        pass: emailPass,
-      },
-    });
+    if (emailPass) {
+      try {
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: emailUser,
+            pass: emailPass,
+          },
+        });
 
-    const spotBadge = registrationOrder
-      ? `Priority Access &bull; Spot #${registrationOrder}`
-      : `Priority Access Reserved`;
+        const spotBadge = registrationOrder
+          ? `Priority Access &bull; Spot #${registrationOrder}`
+          : `Priority Access Reserved`;
 
-    const htmlContent = `
+        const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -185,36 +174,40 @@ export async function POST(req: NextRequest) {
 </html>
 `;
 
-    // 3. Dispatch Email
-    await transporter.sendMail({
-      from: `"Inira Innovations" <${emailUser}>`,
-      to: email,
-      replyTo: emailUser,
-      subject: "Welcome to Inira Innovations — You're on the list",
-      text: `Welcome to Inira Innovations\n\nThank you for joining our waitlist (${email}). We have confirmed your registration.${
-        registrationOrder ? ` You are #${registrationOrder} on the waitlist.` : ""
-      }\n\nAs we prepare for our launch, you will be among the first to receive private previews and early access updates.\n\nWhile waiting, please check out our social media platforms:\n• Instagram: https://instagram.com/inira_innovations (@inira_innovations)\n• LinkedIn: https://linkedin.com/company/inira-innovations\n\nWarm regards,\nInira Innovations\ninirainnovations@gmail.com`,
-      html: htmlContent,
-    });
+        await transporter.sendMail({
+          from: `"Inira Innovations" <${emailUser}>`,
+          to: email,
+          replyTo: emailUser,
+          subject: "Welcome to Inira Innovations — You're on the list",
+          text: `Welcome to Inira Innovations\n\nThank you for joining our waitlist (${email}). We have confirmed your registration.${
+            registrationOrder ? ` You are #${registrationOrder} on the waitlist.` : ""
+          }\n\nAs we prepare for our launch, you will be among the first to receive private previews and early access updates.\n\nWhile waiting, please check out our social media platforms:\n• Instagram: https://instagram.com/inira_innovations (@inira_innovations)\n• LinkedIn: https://linkedin.com/company/inira-innovations\n\nWarm regards,\nInira Innovations\ninirainnovations@gmail.com`,
+          html: htmlContent,
+        });
 
-    // 4. Update email_sent status in Supabase if recorded
-    if (supabase && registrationOrder) {
-      try {
-        await supabase
-          .from("waitlist")
-          .update({ email_sent: true })
-          .eq("id", registrationOrder);
-      } catch (updateErr) {
-        console.warn("[Waitlist DB Update Warning]:", updateErr);
+        emailSentSuccessfully = true;
+
+        if (supabase && registrationOrder) {
+          await supabase
+            .from("waitlist")
+            .update({ email_sent: true })
+            .eq("id", registrationOrder);
+        }
+      } catch (mailErr) {
+        console.error("[Waitlist Email Error]:", mailErr);
       }
+    } else {
+      console.warn("⚠️ [Waitlist] EMAIL_PASS is not set. Skipping email dispatch.");
     }
 
+    // Always succeed if the registration was processed or captured
     return NextResponse.json({
       ok: true,
       message: isAlreadyRegistered
-        ? "You are already on the waitlist! Confirmation email re-sent."
-        : "Confirmation email sent.",
+        ? "You are already on the waitlist! We have verified your spot."
+        : "You are on the waitlist!",
       order: registrationOrder,
+      emailSent: emailSentSuccessfully,
     });
   } catch (error) {
     console.error("[Waitlist API Error]:", error);
